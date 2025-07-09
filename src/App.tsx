@@ -55,7 +55,7 @@ function App() {
         <aside className="w-full md:w-1/4 bg-gray-100 dark:bg-gray-900 p-6 flex flex-col gap-4">
           {/* Photo */}
           <img
-            src="/res/Adam.png"
+            src={`${import.meta.env.BASE_URL}res/Adam.png`}
             className="rounded-xl w-full max-w-50 mx-auto md:mx-0 md:max-w-full md:col-span-1"
           />
 
@@ -207,8 +207,8 @@ function App() {
                 <p className="font-extrabold italic text-purple-300">XP</p>
                 4+ ans
               </Badge>
-              <img src={"/res/fr.png"} width="36px" />
-              <img src={"/res/gb.png"} width="36px" />
+              <img src={`${import.meta.env.BASE_URL}res/fr.png`} width="36px" />
+              <img src={`${import.meta.env.BASE_URL}res/gb.png`} width="36px" />
             </div>
 
             {/* Groupe de droite : boutons */}
