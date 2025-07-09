@@ -1,0 +1,164 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: left;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.print-only {
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+@media print {
+  html,
+  body {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 0;
+    font-size: 10px !important;
+    background: white !important;
+    color: #222 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .flex,
+  .flex-col,
+  .flex-row {
+    gap: 0.25rem !important;
+  }
+  .flex {
+    flex-direction: row !important;
+  }
+  .p-4,
+  .p-6 {
+    padding: 0.5rem !important;
+  }
+  .m-3,
+  .mb-6,
+  .my-1,
+  .gap-4,
+  .gap-2 {
+    margin: 0.25rem !important;
+    gap: 0.25rem !important;
+  }
+  .text-5xl {
+    font-size: 1.3rem !important;
+  }
+  .text-lg {
+    font-size: 0.9rem !important;
+  }
+  .rounded-xl {
+    border-radius: 0.3rem !important;
+  }
+  img,
+  .rounded-xl img {
+    max-width: 50px !important;
+    height: auto !important;
+  }
+  aside {
+    width: 30% !important;
+    max-width: 30% !important;
+    min-width: 0 !important;
+    flex-basis: 30% !important;
+    padding: 0.5rem !important;
+  }
+  main {
+    width: 70% !important;
+    max-width: 70% !important;
+    min-width: 0 !important;
+    flex-basis: 70% !important;
+    padding: 0.5rem !important;
+  }
+  .w-full,
+  .w-3\/4,
+  .md\:w-1\/4 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .shadow-lg,
+  .border {
+    box-shadow: none !important;
+    border-width: 1px !important;
+  }
+  .drop-shadow-lg {
+    filter: none !important;
+  }
+  /* Prevent page breaks inside cards */
+  .rounded-xl,
+  .card,
+  .CardContent {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+  /* Hide less important sections for print if needed */
+  .print-hide,
+  .hide-on-print {
+    display: none !important;
+  }
+  /* Force everything to fit on one page */
+  @page {
+    size: A4;
+    margin: 8mm;
+  }
+  .print-only {
+    visibility: visible !important;
+    height: auto !important;
+    overflow: visible !important;
+    pointer-events: auto !important;
+    display: block !important;
+  }
+  body,
+  html {
+    background: white !important;
+    color: #222 !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 11px !important;
+    margin: 0;
+    padding: 0;
+  }
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+}

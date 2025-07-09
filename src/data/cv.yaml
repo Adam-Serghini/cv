@@ -1,0 +1,177 @@
+fr:
+  name: "Adam Serghini"
+  title: "Ingénieur IA & Lead Développeur"
+  summary: "Ingénieur R&D spécialisé en Intelligence Artificielle avec 4+ années d'expérience en deep learning, computer vision et gestion d'équipe. Expert dans l'optimisation de pipelines ML en temps réel et la restructuration d'architectures logicielles. Passionné par l'innovation technologique et le leadership technique."
+  mail: serghini.adam.84@gmail.com
+  location: "84000 Avignon, France"
+  github: Adam-Serghini
+  linkedin: adam-serghini
+  linkedinLabel: /adam-Serghini
+  phone: +33.6.23.77.23.45
+  skills:
+    code:
+      - Python
+      - Pytorch
+      - Roboflow
+      - Plotly
+      - Dash
+      - Pandas
+      - Numpy
+      - Docker
+      - OpenCV
+      - UV
+      - MCP
+    projet:
+      - Atlassian
+      - Bitbucket
+      - Jira
+      - Git
+  experiences:
+    - company: "Hiphen"
+      position: "Leading AI Engineer"
+      location: "Avignon, France"
+      duration: "Janvier 2023 → Present"
+      icon: "hiphen.webp"
+      isFormation: false
+      description: "Responsable de la refonte complète du pipeline de deep learning de l'entreprise, depuis la définition des problématiques jusqu'au déploiement des modèles en production. J'ai dirigé le développement de solutions d'IA performantes, adaptées à des contraintes réelles de précision, de rapidité et de robustesse."
+      bullets:
+        - "Conception de pipelines complets de traitement : annotation, réannotation stratégique, suivi qualité, réentraînement et validation continue."
+        - "Conception et entraînement de modèles pour la classification, la segmentation sémantique et d'instance, la détection et l'extraction de features."
+        - "Développement de modèles de détection, segmentation (sémantique & instance) et classification en temps réel avec une précision supérieure à 95%."
+        - "Refonte du code de production via la création de packages réutilisables et mutualisation des modules de deep learning."
+        - "Choix d'architectures selon les contraintes projet (latence, performance, ressources) et évaluation continue sur des interfaces internes."
+        - "Piloté une équipe technique composée de développeurs et stagiaires : définition des bonnes pratiques, accompagnement technique et suivi de montée en compétence."
+        - "Collaboration étroite avec les pôles R&D, Production et Marketing pour aligner les solutions IA aux besoins métiers."
+    - company: "Hiphen"
+      position: "R&D Engineer"
+      location: "Avignon, France"
+      duration: "Aout 2021 → Janvier 2023"
+      icon: "hiphen.webp"
+      isFormation: false
+      description: "Développement de solutions d'analyse d'images avec caméras RGB, MS, LiDAR et scanners. Restructuration des modules de développement via la mutualisation de code en packages réutilisables. Établissement des guidelines de développement actuelles chez Hiphen."
+      bullets:
+        - "Développement de solutions d'analyse d'images avec caméras RGB, MS, LiDAR et scanners."
+        - "Restructuration des modules de développement via la mutualisation de code en packages réutilisables."
+        - "Établissement des guidelines de développement actuelles chez Hiphen."
+    - company: "Hiphen"
+      position: "Stage"
+      location: "Avignon, France"
+      duration: "Janvier 2021 →  Aout 2021"
+      icon: "hiphen.webp"
+      isFormation: true
+      description: "Mis en place un processus de segmentation d'instances sur images géoréférencées, levant un goulot d'étranglement critique dans le pipeline de traitement de l'entreprise."
+      bullets:
+        - "Mis en place un processus de segmentation d'instances sur images géoréférencées, levant un goulot d'étranglement critique dans le pipeline de traitement de l'entreprise."
+    - company: "Givaudan"
+      position: "Stage"
+      location: "Avignon, France"
+      duration: "Aout 2020"
+      icon: "givaudan.svg"
+      isFormation: true
+      description: "Développé un outil de suivi du temps pour quantifier les tâches réalisées par les employés, améliorant la gestion des ressources et optimisant les coûts opérationnels."
+      bullets:
+        - "Développé un outil de suivi du temps pour quantifier les tâches réalisées par les employés, améliorant la gestion des ressources et optimisant les coûts opérationnels."
+    - company: "CERI"
+      position: "Master's degree in computer science"
+      location: "Avignon, France"
+      duration: "2016 → 2021"
+      icon: "au.png"
+      isFormation: true
+      description: "Master obtenu dans un établissement à forte orientation recherche, avec une spécialisation en Intelligence Artificielle et Traitement du Langage Naturel."
+      bullets:
+        - "Master obtenu dans un établissement à forte orientation recherche, avec une spécialisation en Intelligence Artificielle et Traitement du Langage Naturel."
+  hobbies:
+    - Voyage & exploration
+    - esport
+    - Musculation
+    - Cuisine
+    - Volley Ball
+
+en:
+  name: "Adam Serghini"
+  title: "Ingénieur IA & Lead Développeur"
+  summary: "Highly skilled and results-driven R&D Engineer with extensive experience in deep learning, data analysis, and project management. Adept at leveraging various data sources and technologies to drive project success and enhance operational efficiency."
+  mail: serghini.adam.84@gmail.com
+  location: "84000 Avignon, France"
+  github: Adam-Serghini
+  phone: +33.6.23.77.23.45
+  linkedin: adam-serghini
+  skills:
+    code:
+      - Python
+      - Pytorch
+      - Roboflow
+      - Plotly
+      - Dash
+      - Pandas
+      - Numpy
+      - Docker
+      - OpenCV
+      - UV
+      - MCP
+    projet:
+      - Atlassian
+      - Bitbucket
+      - Jira
+      - Git
+
+  experiences:
+    - company: "Hiphen"
+      position: "Leading AI Engineer"
+      location: "Avignon, France"
+      duration: "January 2023 → Present"
+      icon: "hiphen.webp"
+      isFormation: false
+      description: "Responsible for the complete overhaul of the company's deep learning pipeline, from problem definition to model deployment in production. Led the development of high-performance AI solutions tailored to real-world constraints of accuracy, speed, and robustness."
+      bullets:
+        - "Designed end-to-end processing pipelines: annotation, strategic re-annotation, quality monitoring, retraining, and continuous validation."
+        - "Developed and trained models for classification, semantic and instance segmentation, detection, and feature extraction."
+        - "Built real-time detection, segmentation (semantic & instance), and classification models with over 95% accuracy."
+        - "Refactored production code by creating reusable packages and consolidating deep learning modules."
+        - "Selected architectures based on project constraints (latency, performance, resources) and performed ongoing evaluation on internal interfaces."
+        - "Led a technical team of developers and interns: defined best practices, provided technical guidance, and supported skill development."
+        - "Collaborated closely with R&D, Production, and Marketing teams to align AI solutions with business needs."
+    - company: "Hiphen"
+      position: "R&D Engineer"
+      location: "Avignon, France"
+      duration: "August 2021 → January 2023"
+      icon: "hiphen.webp"
+      isFormation: false
+      description: "Developed image analysis solutions using RGB, MS, LiDAR cameras, and scanners. Restructured development modules by consolidating code into reusable packages. Established current development guidelines at Hiphen."
+      bullets:
+        - "Developed image analysis solutions using RGB, MS, LiDAR cameras, and scanners."
+        - "Restructured development modules by consolidating code into reusable packages."
+        - "Established current development guidelines at Hiphen."
+    - company: "Hiphen"
+      position: "Internship"
+      location: "Avignon, France"
+      duration: "January 2021 → August 2021"
+      icon: "hiphen.webp"
+      isFormation: true
+      description: "Implemented an instance segmentation process on georeferenced images, removing a critical bottleneck in the company's processing pipeline."
+      bullets:
+        - "Implemented an instance segmentation process on georeferenced images, removing a critical bottleneck in the company's processing pipeline."
+    - company: "Givaudan"
+      position: "Internship"
+      location: "Avignon, France"
+      duration: "August 2020"
+      icon: "givaudan.svg"
+      isFormation: true
+      description: "Developed a time-tracking tool to quantify tasks completed by employees, improving resource management and optimizing operational costs."
+      bullets:
+        - "Developed a time-tracking tool to quantify tasks completed by employees, improving resource management and optimizing operational costs."
+    - company: "CERI"
+      position: "Master's degree in computer science"
+      location: "Avignon, France"
+      duration: "2016 → 2021"
+      icon: "au.png"
+      isFormation: true
+      description: "Completed a Master's degree at a research-focused institution, specializing in Artificial Intelligence and Natural Language Processing."
+      bullets:
+        - "Completed a Master's degree at a research-focused institution, specializing in Artificial Intelligence and Natural Language Processing."
+  hobbies:
+    - Travel & exploration
+    - Esports
+    - Weight training
+    - Cooking
+    - Volleyball
