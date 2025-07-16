@@ -43,25 +43,25 @@ fr:
         - "Piloté une équipe technique composée de développeurs et stagiaires : définition des bonnes pratiques, accompagnement technique et suivi de montée en compétence."
         - "Collaboration étroite avec les pôles R&D, Production et Marketing pour aligner les solutions IA aux besoins métiers."
     - company: "Hiphen"
-      position: "R&D Engineer"
+      position: "Ingénieur R&D"
       location: "Avignon, France"
       duration: "Aout 2021 → Janvier 2023"
       icon: "hiphen.webp"
       isFormation: false
-      description: "Développement de solutions d'analyse d'images avec caméras RGB, MS, LiDAR et scanners. Restructuration des modules de développement via la mutualisation de code en packages réutilisables. Établissement des guidelines de développement actuelles chez Hiphen."
+      description: "Premier membre de l'équipe R&D de l'entreprise, j'ai évolué dans un environnement de développement agile, contribuant à sa structuration en accompagnant sa croissance jusqu'à 6 personnes."
       bullets:
-        - "Développement de solutions d'analyse d'images avec caméras RGB, MS, LiDAR et scanners."
-        - "Restructuration des modules de développement via la mutualisation de code en packages réutilisables."
-        - "Établissement des guidelines de développement actuelles chez Hiphen."
+        - "Exploitation et fusion de données venant de différents capteurs afin d'extraire des informations agronomiques utiles."
+        - "Création de maquettes et de prototypes d'interfaces utilisateurs pour les solutions d'analyse d'images."
+        - "Création et maintenance d'un boilerplate pour faciliter le développement de nouveaux modules."
     - company: "Hiphen"
       position: "Stage"
       location: "Avignon, France"
-      duration: "Janvier 2021 →  Aout 2021"
+      duration: "Janvier 2021 → Aout 2021"
       icon: "hiphen.webp"
       isFormation: true
       description: "Mis en place un processus de segmentation d'instances sur images géoréférencées, levant un goulot d'étranglement critique dans le pipeline de traitement de l'entreprise."
       bullets:
-        - "Mis en place un processus de segmentation d'instances sur images géoréférencées, levant un goulot d'étranglement critique dans le pipeline de traitement de l'entreprise."
+        - "Entrainement et déploiement d'un Mask R-CNN pour la segmentation d'instances sur images géoréférencées."
     - company: "Givaudan"
       position: "Stage"
       location: "Avignon, France"
@@ -70,16 +70,16 @@ fr:
       isFormation: true
       description: "Développé un outil de suivi du temps pour quantifier les tâches réalisées par les employés, améliorant la gestion des ressources et optimisant les coûts opérationnels."
       bullets:
-        - "Développé un outil de suivi du temps pour quantifier les tâches réalisées par les employés, améliorant la gestion des ressources et optimisant les coûts opérationnels."
-    - company: "CERI"
-      position: "Master's degree in computer science"
+        - "Conception et développement complet sous WinDev : maquettes, spécifications, implémentation, déploiement et intégration des premiers retours utilisateurs."
+    - company: "Centre d'Enseignement et de Recherche en Informatique - CERI"
+      position: "Master Intelligence Artificielle et Ingénierie logicielle."
       location: "Avignon, France"
       duration: "2016 → 2021"
       icon: "au.png"
       isFormation: true
       description: "Master obtenu dans un établissement à forte orientation recherche, avec une spécialisation en Intelligence Artificielle et Traitement du Langage Naturel."
       bullets:
-        - "Master obtenu dans un établissement à forte orientation recherche, avec une spécialisation en Intelligence Artificielle et Traitement du Langage Naturel."
+        - "Mise en œuvre de modèles RNN, LSTM et Transformers pour des tâches de traitement du langage naturel (classification, génération, résumé de texte)."
   hobbies:
     - Voyage & exploration
     - esport

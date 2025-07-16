@@ -25,8 +25,50 @@ import { ModeToggle } from "./components/mode-toggle";
 import { Card, CardContent } from "@/components/ui/card";
 import { useReactToPrint } from "react-to-print";
 
-function App() {
+// Custom hook for language management
+const useLanguage = () => {
   const [lang, setLang] = useState<"fr" | "en">("fr");
+
+  const toggleLanguage = () => setLang(lang === "fr" ? "en" : "fr");
+  const isFrench = lang === "fr";
+
+  return { lang, setLang, toggleLanguage, isFrench };
+};
+
+// Custom hook for skill icon loading with local fallback
+const useSkillIcon = (skillName: string) => {
+  const [iconSrc, setIconSrc] = useState<string | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  // Build CDN and local URLs
+  const cdnUrl = `https://cdn.simpleicons.org/${skillName.replace(/\s+/g, "")}`;
+  const localUrl = `${import.meta.env.BASE_URL}icon/${skillName.replace(
+    /\s+/g,
+    ""
+  )}.png`;
+
+  // On mount, try CDN first
+  useState(() => {
+    setIconSrc(cdnUrl);
+  });
+
+  const handleLoad = () => setIsLoaded(true);
+  const handleError = () => {
+    if (iconSrc === cdnUrl) {
+      // Try local fallback
+      setIconSrc(localUrl);
+      setIsLoaded(false);
+    } else {
+      setHasError(true);
+    }
+  };
+
+  return { iconSrc, isLoaded, hasError, handleLoad, handleError };
+};
+
+function App() {
+  const { lang, setLang, toggleLanguage, isFrench } = useLanguage();
 
   const data = cvData[lang];
 
@@ -50,74 +92,104 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       {/* Main app: hide in print */}
-      <div className="flex min-h-screen no-print">
+      <div className="flex min-h-screen no-print flex-col lg:flex-row">
         {/* Colonne gauche : 1/3 */}
-        <aside className="w-full md:w-1/4 bg-gray-100 dark:bg-gray-900 p-6 flex flex-col gap-4">
+        <aside className="w-full lg:w-1/4 bg-gray-100 dark:bg-gray-900 p-4 lg:p-6 flex flex-col gap-4">
           {/* Photo */}
           <img
             src={`${import.meta.env.BASE_URL}res/Adam.png`}
-            className="rounded-xl w-full max-w-50 mx-auto md:mx-0 md:max-w-full md:col-span-1"
+            className="rounded-xl w-full max-w-48 mx-auto lg:mx-0 lg:max-w-full"
+            alt="Adam Serghini"
           />
 
           {/* Contacts + Réseaux */}
           <Card className="p-4 rounded-xl border gap-2">
-            <div className="flex items-center gap-2">
-              <HomeIcon size="16" /> {data.location}
+            <div className="flex items-center gap-2 text-sm">
+              <HomeIcon size="16" className="text-gray-500" /> {data.location}
             </div>
-            <div className="flex items-center gap-2">
-              <Phone size="16" /> {data.phone}
+            <div className="flex items-center gap-2 text-sm">
+              <Phone size="16" className="text-gray-500" /> {data.phone}
             </div>
-            <a href={`mailto:${data.mail}?subject=You are Hired !`}>
-              <div className="flex items-center gap-2">
-                <AtSign size="16" /> {data.mail}
-              </div>
+            <a
+              href={`mailto:${data.mail}?subject=You are Hired !`}
+              className="flex items-center gap-2 text-sm hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <AtSign size="16" className="text-gray-500" /> {data.mail}
             </a>
-            <a href={`https://www.linkedin.com/in/${data.linkedin}/`}>
-              <div className="flex items-center gap-2">
-                <Linkedin size="16" /> /adam-Serghini
-              </div>
+            <a
+              href={`https://www.linkedin.com/in/${data.linkedin}/`}
+              className="flex items-center gap-2 text-sm hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Linkedin size="16" className="text-gray-500" /> /adam-Serghini
             </a>
-            <a href={`https://github.com/${data.github}`}>
-              <div className="flex items-center gap-2">
-                <Github size="16" /> /Adam-Serghini
-              </div>
+            <a
+              href={`https://github.com/${data.github}`}
+              className="flex items-center gap-2 text-sm hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Github size="16" className="text-gray-500" /> /Adam-Serghini
             </a>
           </Card>
           {/* Skills */}
-          <Card className="p-4 rounded-xl border gap-2">
-            <Badge variant="secondary">Skills | Code</Badge>
+          <Card className="p-4 rounded-xl border gap-3">
+            <Badge variant="secondary" className="text-xs font-semibold">
+              Skills | Code
+            </Badge>
             <div className="flex flex-row flex-wrap items-start content-start gap-1.5">
-              {data.skills.code.map((skill: string, index: number) => (
-                <Badge key={index} variant="secondary">
-                  <img
-                    width="16px"
-                    src={`https://cdn.simpleicons.org/${skill.replace(
-                      /\s+/g,
-                      ""
-                    )}`}
-                    className="inline-block mr-1"
-                  />
-                  {skill}
-                </Badge>
-              ))}
+              {data.skills.code.map((skill: string, index: number) => {
+                const { iconSrc, isLoaded, hasError, handleLoad, handleError } =
+                  useSkillIcon(skill);
+                return (
+                  <Badge key={index} variant="secondary" className="text-xs">
+                    {!hasError && iconSrc && (
+                      <img
+                        width="14px"
+                        src={iconSrc}
+                        className={`inline-block mr-1 transition-opacity duration-200 ${
+                          isLoaded ? "opacity-100" : "opacity-0"
+                        }`}
+                        alt={skill}
+                        onLoad={handleLoad}
+                        onError={handleError}
+                      />
+                    )}
+                    {skill}
+                  </Badge>
+                );
+              })}
             </div>
           </Card>
-          <Card className="p-4 rounded-xl border gap-2">
-            <Badge variant="secondary">Skills | Project</Badge>
+          <Card className="p-4 rounded-xl border gap-3">
+            <Badge variant="secondary" className="text-xs font-semibold">
+              Skills | Project
+            </Badge>
             <div className="flex flex-row flex-wrap items-start content-start gap-1.5">
-              {data.skills.projet.map((skill: string, index: number) => (
-                <Badge key={index} variant="secondary">
-                  <img
-                    width="16px"
-                    src={`https://cdn.simpleicons.org/${skill.replace(
-                      /\s+/g,
-                      ""
-                    )}`}
-                    className="inline-block mr-1"
-                  />
-                  {skill}
-                </Badge>
-              ))}
+              {data.skills.projet.map((skill: string, index: number) => {
+                const { iconSrc, isLoaded, hasError, handleLoad, handleError } =
+                  useSkillIcon(skill);
+                return (
+                  <Badge key={index} variant="secondary" className="text-xs">
+                    {!hasError && iconSrc && (
+                      <img
+                        width="14px"
+                        src={iconSrc}
+                        className={`inline-block mr-1 transition-opacity duration-200 ${
+                          isLoaded ? "opacity-100" : "opacity-0"
+                        }`}
+                        alt={skill}
+                        onLoad={handleLoad}
+                        onError={handleError}
+                      />
+                    )}
+                    {skill}
+                  </Badge>
+                );
+              })}
             </div>
           </Card>
           {/* Interests */}
@@ -196,19 +268,37 @@ function App() {
         </aside>
 
         {/* Colonne droite : 2/3 */}
-        <main className="w-3/4 bg-light-background dark:bg-dark-background text-light-text dark:text-dark-text">
-          <div className="w-full flex justify-between items-center py-2 px-2 bg-white dark:bg-gray-900">
+        <main className="w-full lg:w-3/4 bg-light-background dark:bg-dark-background text-light-text dark:text-dark-text">
+          <div className="w-full flex flex-col sm:flex-row justify-between items-center py-2 px-4 bg-white dark:bg-gray-900 gap-2">
             {/* Groupe de gauche : badges + drapeaux */}
-            <div className="flex items-center gap-2">
-              <Badge variant="secondary" className="flex items-center gap-1">
-                Ingénieur IA & Lead Développeur
+            <div className="flex items-center gap-2 flex-wrap">
+              <Badge
+                variant="secondary"
+                className="flex items-center gap-1 text-xs sm:text-sm"
+              >
+                {data.title}
               </Badge>
-              <Badge variant="secondary" className="flex items-center gap-1">
+              <Badge
+                variant="secondary"
+                className="flex items-center gap-1 text-xs sm:text-sm"
+              >
                 <p className="font-extrabold italic text-purple-300">XP</p>
                 4+ ans
               </Badge>
-              <img src={`${import.meta.env.BASE_URL}res/fr.png`} width="36px" />
-              <img src={`${import.meta.env.BASE_URL}res/gb.png`} width="36px" />
+              <div className="flex items-center gap-1">
+                <img
+                  src={`${import.meta.env.BASE_URL}res/fr.png`}
+                  width="24px"
+                  className="sm:w-9"
+                  alt="French"
+                />
+                <img
+                  src={`${import.meta.env.BASE_URL}res/gb.png`}
+                  width="24px"
+                  className="sm:w-9"
+                  alt="English"
+                />
+              </div>
             </div>
 
             {/* Groupe de droite : boutons */}
@@ -217,32 +307,37 @@ function App() {
               <Button
                 variant="themeToggle"
                 size="sm"
-                onClick={() => setLang(lang === "fr" ? "en" : "fr")}
+                onClick={toggleLanguage}
+                className="text-xs sm:text-sm"
+                aria-label={`Switch to ${lang === "fr" ? "English" : "French"}`}
               >
                 {lang === "fr" ? "EN" : "FR"}
               </Button>
               <Button
-                className="no-print"
+                className="no-print text-xs sm:text-sm"
                 variant="themeToggle"
                 size="sm"
                 onClick={() => {
                   console.log("printRef.current:", printRef.current);
                   handlePrint();
                 }}
+                aria-label="Export CV as PDF"
               >
                 Export PDF
               </Button>
             </div>
           </div>
           <section className="mb-6 m-3">
-            <h1 className="text-5xl font-extrabold text-blue-400 drop-shadow-lg">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-blue-400 drop-shadow-lg mb-3">
               <span className="bg-gradient-to-r from-neutral-500 to-neutral-400 text-transparent bg-clip-text">
                 Adam SERGHINI
               </span>
             </h1>
-            <p className="text-lg">{data.summary}</p>
+            <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+              {data.summary}
+            </p>
           </section>
-          <section className="p-4">
+          <section className="p-4 space-y-6">
             {/* Cartes en ligne */}
             <div className="flex flex-col gap-4 w-full">
               {/* Work Experience */}
@@ -366,58 +461,6 @@ function App() {
             </div>
             <div>{data.summary}</div>
           </div>
-          {/* Skills */}
-          <div style={{ marginBottom: "18px" }}>
-            <div
-              style={{
-                fontSize: "1.1rem",
-                fontWeight: "bold",
-                color: "#2b4a6f",
-                marginBottom: "4px",
-                letterSpacing: "0.5px",
-              }}
-            >
-              {lang === "fr" ? "Compétences" : "Skills"}
-            </div>
-            <div style={{ marginBottom: "2px" }}>
-              <span style={{ fontWeight: "bold" }}>
-                {lang === "fr" ? "Code" : "Code"}:
-              </span>{" "}
-              {data.skills.code.join(", ")}
-            </div>
-            <div>
-              <span style={{ fontWeight: "bold" }}>
-                {lang === "fr" ? "Projet" : "Project"}:
-              </span>{" "}
-              {data.skills.projet.join(", ")}
-            </div>
-          </div>
-          {/* Hobbies / Interests */}
-          {/* <div style={{ marginBottom: "18px" }}>
-            <div
-              style={{
-                fontSize: "1.1rem",
-                fontWeight: "bold",
-                color: "#2b4a6f",
-                marginBottom: "4px",
-                letterSpacing: "0.5px",
-              }}
-            >
-              {lang === "fr" ? "Centres d'intérêt" : "Hobbies"}
-            </div>
-            <ul
-              style={{
-                margin: 0,
-                padding: 0,
-                listStyle: "disc inside",
-                color: "#444",
-              }}
-            >
-              {data.hobbies.map((hobby: string, idx: number) => (
-                <li key={idx}>{hobby}</li>
-              ))}
-            </ul>
-          </div> */}
           {/* Experience & Education */}
           <div style={{ marginBottom: "18px" }}>
             <div
@@ -469,6 +512,32 @@ function App() {
                 )}
               </div>
             ))}
+          </div>
+          {/* Skills */}
+          <div style={{ marginBottom: "18px" }}>
+            <div
+              style={{
+                fontSize: "1.1rem",
+                fontWeight: "bold",
+                color: "#2b4a6f",
+                marginBottom: "4px",
+                letterSpacing: "0.5px",
+              }}
+            >
+              {lang === "fr" ? "Compétences" : "Skills"}
+            </div>
+            <div style={{ marginBottom: "2px" }}>
+              <span style={{ fontWeight: "bold" }}>
+                {lang === "fr" ? "Code" : "Code"}:
+              </span>{" "}
+              {data.skills.code.join(", ")}
+            </div>
+            <div>
+              <span style={{ fontWeight: "bold" }}>
+                {lang === "fr" ? "Projet" : "Project"}:
+              </span>{" "}
+              {data.skills.projet.join(", ")}
+            </div>
           </div>
           {/* Publications */}
           <div style={{ marginBottom: "0" }}>

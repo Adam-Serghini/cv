@@ -21,25 +21,34 @@ export function ExperienceCard({
   children,
 }: ExperienceProps) {
   return (
-    <Card className="p-4 gap-2 border-0">
-      <div className="flex flex-col sm:flex-row justify-between items-start gap-2">
-        <div>
-          <div className="flex items-center gap-2">
-            <img width="16px" src={`/icon/${icon}`} />
-            <h3 className="text-xl font-bold ">{company}</h3>
-            <p className="flex items-center gap-2 text-neutral-500">
-              {position}
-            </p>
+    <Card className="p-4 gap-3 border-0 hover:shadow-md transition-shadow duration-200">
+      <div className="flex flex-col sm:flex-row justify-between items-start">
+        <div className="flex-1">
+          <div className="flex items-center gap-2 mb-1">
+            <img
+              width="20px"
+              src={`${import.meta.env.BASE_URL}icon/${icon}`}
+              alt={`${company} logo`}
+              className="rounded-sm"
+            />
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">
+              {company}
+            </h3>
           </div>
-          <p className="flex items-center gap-2 text-neutral-500">
-            <MapPin size="16" /> {location}
+          <p className="text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300 italic">
+            {position}
           </p>
-        </div>{" "}
-        <div className="flex flex-col sm:flex-row gap-2">
-          <Badge variant="secondary">{duration}</Badge>
+        </div>
+        <div className="flex flex-col items-end gap-1 min-w-[120px] text-right">
+          <Badge variant="secondary" className="text-xs whitespace-nowrap mb-1">
+            {duration}
+          </Badge>
+          <p className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 justify-end">
+            <MapPin size="14" /> {location}
+          </p>
         </div>
       </div>
-      <CardContent className="text-left">{children}</CardContent>
+      <CardContent className="text-left px-0">{children}</CardContent>
     </Card>
   );
 }
