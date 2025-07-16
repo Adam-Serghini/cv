@@ -68,7 +68,7 @@ const useSkillIcon = (skillName: string) => {
 };
 
 function App() {
-  const { lang, setLang, toggleLanguage, isFrench } = useLanguage();
+  const { lang, toggleLanguage } = useLanguage();
 
   const data = cvData[lang];
 
