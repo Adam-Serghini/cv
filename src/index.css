@@ -181,3 +181,29 @@ button:focus-visible {
     @apply bg-background text-foreground;
   }
 }
+
+/* Hide print header/footer */
+@media print {
+  @page {
+    margin: 0 !important;
+    size: A4;
+  }
+  
+  /* Additional rules to remove headers/footers */
+  body {
+    margin: 0 !important;
+  }
+  
+  /* Hide any print-specific browser UI */
+  @page :first {
+    margin-top: 0 !important;
+  }
+  
+  @page :left {
+    margin: 0 !important;
+  }
+  
+  @page :right {
+    margin: 0 !important;
+  }
+}

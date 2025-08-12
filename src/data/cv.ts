@@ -18,6 +18,13 @@ export interface Experience {
   bullets?: string[];
 }
 
+export interface Publication {
+  title: string;
+  year: number;
+  description: string;
+  url: string;
+}
+
 export interface CVData {
   name: string;
   title: string;
@@ -31,6 +38,7 @@ export interface CVData {
   skills: Skill;
   experiences: Experience[];
   hobbies: string[];
+  publications: Publication[];
 }
 
 export interface CVDataStructure {

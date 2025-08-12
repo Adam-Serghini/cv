@@ -1,4 +1,5 @@
 import "./App.css";
+import React from "react";
 import {
   AtSign,
   Plane,
@@ -35,15 +36,17 @@ const useLanguage = () => {
   return { lang, setLang, toggleLanguage, isFrench };
 };
 
-// Custom hook for skill icon loading with local fallback
-const useSkillIcon = (skillName: string) => {
+// Component for skill badge with icon
+const SkillBadge = ({ skill }: { skill: string }) => {
   const [iconSrc, setIconSrc] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
   // Build CDN and local URLs
-  const cdnUrl = `https://cdn.simpleicons.org/${skillName.replace(/\s+/g, "")}`;
-  const localUrl = `${import.meta.env.BASE_URL}icon/${skillName.replace(
+  const cdnUrl = `https://cdn.simpleicons.org/${skill
+    .toLowerCase()
+    .replace(/\s+/g, "")}`;
+  const localUrl = `${import.meta.env.BASE_URL}icon/${skill.replace(
     /\s+/g,
     ""
   )}.png`;
@@ -64,7 +67,23 @@ const useSkillIcon = (skillName: string) => {
     }
   };
 
-  return { iconSrc, isLoaded, hasError, handleLoad, handleError };
+  return (
+    <Badge variant="secondary" className="text-xs">
+      {!hasError && iconSrc && (
+        <img
+          width="14px"
+          src={iconSrc}
+          className={`inline-block mr-1 transition-opacity duration-200 ${
+            isLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          alt={skill}
+          onLoad={handleLoad}
+          onError={handleError}
+        />
+      )}
+      {skill}
+    </Badge>
+  );
 };
 
 function App() {
@@ -87,6 +106,19 @@ function App() {
     documentTitle: `CV_Adam_Serghini_${lang.toUpperCase()}`,
     onBeforePrint: handleBeforePrint,
     onAfterPrint: handleAfterPrint,
+    pageStyle: `
+      @page { 
+        size: A4; 
+        margin: 0;
+      }
+      @media print {
+        html, body {
+          height: 100%;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+      }
+    `,
   });
 
   return (
@@ -141,27 +173,9 @@ function App() {
               Skills | Code
             </Badge>
             <div className="flex flex-row flex-wrap items-start content-start gap-1.5">
-              {data.skills.code.map((skill: string, index: number) => {
-                const { iconSrc, isLoaded, hasError, handleLoad, handleError } =
-                  useSkillIcon(skill);
-                return (
-                  <Badge key={index} variant="secondary" className="text-xs">
-                    {!hasError && iconSrc && (
-                      <img
-                        width="14px"
-                        src={iconSrc}
-                        className={`inline-block mr-1 transition-opacity duration-200 ${
-                          isLoaded ? "opacity-100" : "opacity-0"
-                        }`}
-                        alt={skill}
-                        onLoad={handleLoad}
-                        onError={handleError}
-                      />
-                    )}
-                    {skill}
-                  </Badge>
-                );
-              })}
+              {data.skills.code.map((skill, index) => (
+                <SkillBadge key={index} skill={skill} />
+              ))}
             </div>
           </Card>
           <Card className="p-4 rounded-xl border gap-3">
@@ -169,27 +183,9 @@ function App() {
               Skills | Project
             </Badge>
             <div className="flex flex-row flex-wrap items-start content-start gap-1.5">
-              {data.skills.projet.map((skill: string, index: number) => {
-                const { iconSrc, isLoaded, hasError, handleLoad, handleError } =
-                  useSkillIcon(skill);
-                return (
-                  <Badge key={index} variant="secondary" className="text-xs">
-                    {!hasError && iconSrc && (
-                      <img
-                        width="14px"
-                        src={iconSrc}
-                        className={`inline-block mr-1 transition-opacity duration-200 ${
-                          isLoaded ? "opacity-100" : "opacity-0"
-                        }`}
-                        alt={skill}
-                        onLoad={handleLoad}
-                        onError={handleError}
-                      />
-                    )}
-                    {skill}
-                  </Badge>
-                );
-              })}
+              {data.skills.projet.map((skill, index) => (
+                <SkillBadge key={index} skill={skill} />
+              ))}
             </div>
           </Card>
           {/* Interests */}
@@ -197,24 +193,26 @@ function App() {
             <Badge className="flex gap-1 items-center" variant="secondary">
               <Sparkles /> {lang === "fr" ? "Centres d'intérêt" : "Hobbies"}
             </Badge>
-            <div className="flex gap-1 items-center">
-              <Plane size="16" />{" "}
-              {lang === "fr" ? "Voyage & exploration" : "Travel & exploration"}
-            </div>
-            <div className="flex gap-1 items-center">
-              <Gamepad2 size="16" /> {lang === "fr" ? "esport" : "Esports"}
-            </div>
-            <div className="flex gap-1 items-center">
-              <Dumbbell size="16" />{" "}
-              {lang === "fr" ? "Musculation" : "Weight training"}
-            </div>
-            <div className="flex gap-1 items-center">
-              <ChefHat size="16" /> {lang === "fr" ? "Cuisine" : "Cooking"}
-            </div>
-            <div className="flex gap-1 items-center">
-              <Volleyball size="16" />{" "}
-              {lang === "fr" ? "Volley Ball" : "Volleyball"}
-            </div>
+            {data.hobbies.map((hobby, index) => {
+              const hobbyIcons: { [key: string]: React.JSX.Element } = {
+                "Voyage & exploration": <Plane size="16" />,
+                "Travel & exploration": <Plane size="16" />,
+                "E-sport": <Gamepad2 size="16" />,
+                "E-sports": <Gamepad2 size="16" />,
+                Musculation: <Dumbbell size="16" />,
+                "Weight training": <Dumbbell size="16" />,
+                Cuisine: <ChefHat size="16" />,
+                Cooking: <ChefHat size="16" />,
+                "Volley-ball": <Volleyball size="16" />,
+                Volleyball: <Volleyball size="16" />,
+              };
+              return (
+                <div key={index} className="flex gap-1 items-center">
+                  {hobbyIcons[hobby] || <Sparkles size="16" />}
+                  {hobby}
+                </div>
+              );
+            })}
           </Card>
 
           <Card className="p-4 rounded-xl border gap-2 justify-between gap-1 content-between border border-orange-600">
@@ -226,43 +224,23 @@ function App() {
               Publications
             </Badge>
             <CardContent className="text-sm text-muted-foreground space-y-1">
-              <div>
-                <strong>
-                  2024 - GWFSS: Wheat Semantic Segmentation Dataset
-                </strong>
-                <p>
-                  Open-source dataset for semantic segmentation of wheat
-                  imagery.
-                </p>
-                <a
-                  href="https://www.global-wheat.com/gwfss.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-orange-600 hover:underline mt-1"
-                >
-                  Visit website
-                  <ExternalLink size="16" />
-                </a>
-              </div>
-              <div>
-                <strong>
-                  2024 - Predicting Sunflower Head Moisture Content Using
-                  Self-Supervised Intermediate Representations
-                </strong>
-                <p>
-                  Leveraging autoencoder-based intermediate features to estimate
-                  moisture content in sunflower heads from image data.
-                </p>
-                <a
-                  href="https://helexproject.eu/fr/le-projet-helex/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-orange-600 hover:underline mt-1"
-                >
-                  Visit website
-                  <ExternalLink size="16" />
-                </a>
-              </div>
+              {data.publications.map((pub, index) => (
+                <div key={index}>
+                  <strong>
+                    {pub.year} - {pub.title}
+                  </strong>
+                  <p>{pub.description}</p>
+                  <a
+                    href={pub.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-orange-600 hover:underline mt-1"
+                  >
+                    {lang === "fr" ? "Visiter le site" : "Visit website"}
+                    <ExternalLink size="16" />
+                  </a>
+                </div>
+              ))}
             </CardContent>
           </Card>
         </aside>
@@ -342,8 +320,8 @@ function App() {
             <div className="flex flex-col gap-4 w-full">
               {/* Work Experience */}
               {data.experiences
-                .filter((exp: any) => !exp.isFormation)
-                .map((exp: any, idx: number) => (
+                .filter((exp) => !exp.isFormation)
+                .map((exp, idx) => (
                   <ExperienceCard
                     key={"work-" + idx}
                     company={exp.company}
@@ -357,24 +335,24 @@ function App() {
                     </p>
                     <ul className="ml-4 space-y-1 text-sm text-muted-foreground text-left list-disc">
                       {exp.bullets &&
-                        exp.bullets.map((bullet: string, bidx: number) => (
+                        exp.bullets.map((bullet, bidx) => (
                           <li key={bidx}>{bullet}</li>
                         ))}
                     </ul>
                   </ExperienceCard>
                 ))}
               {/* Formation/Education Split Line */}
-              <div className="flex items-center gap-2 my-1">
-                <GraduationCap size="36" className="text-lime-600" />
-                <span className="text-lg font-bold text-lime-600">
+              <div className="flex items-center gap-3 my-6">
+                <GraduationCap size="36" className="text-green-500" />
+                <span className="text-lg font-bold text-green-500">
                   {lang === "fr" ? "Formation" : "Education"}
                 </span>
-                <div className="flex-grow h-px bg-gradient-to-r from-lime-400 to-lime-900"></div>
+                <div className="flex-grow h-0.5 bg-gradient-to-r from-green-400 via-emerald-500 to-teal-600 rounded-full"></div>
               </div>
               {/* Formation/Education */}
               {data.experiences
-                .filter((exp: any) => exp.isFormation)
-                .map((exp: any, idx: number) => (
+                .filter((exp) => exp.isFormation)
+                .map((exp, idx) => (
                   <ExperienceCard
                     key={"formation-" + idx}
                     company={exp.company}
@@ -388,7 +366,7 @@ function App() {
                     </p>
                     <ul className="ml-4 space-y-1 text-sm text-muted-foreground text-left list-disc">
                       {exp.bullets &&
-                        exp.bullets.map((bullet: string, bidx: number) => (
+                        exp.bullets.map((bullet, bidx) => (
                           <li key={bidx}>{bullet}</li>
                         ))}
                     </ul>
@@ -404,179 +382,303 @@ function App() {
           style={{
             maxWidth: "800px",
             margin: "0 auto",
-            padding: "0",
-            fontFamily: "Arial, sans-serif",
-            color: "#222",
+            padding: "15px 30px 10px 30px",
+            fontFamily: "'Arial', 'Helvetica', sans-serif",
+            color: "#1a1a1a",
+            lineHeight: "1.35",
+            fontSize: "10pt",
           }}
         >
-          {/* Header */}
+          {/* Header - Professional and Compact */}
           <div
             style={{
-              background: "#2b4a6f",
-              color: "white",
-              padding: "24px 32px 16px 32px",
-              borderRadius: "0 0 8px 8px",
-              marginBottom: "24px",
+              borderBottom: "2px solid #1a1a1a",
+              paddingBottom: "10px",
+              marginBottom: "15px",
             }}
           >
             <h1
               style={{
-                fontSize: "2.2rem",
-                fontWeight: "bold",
-                margin: 0,
-                letterSpacing: "1px",
+                fontSize: "24pt",
+                fontWeight: "600",
+                margin: "0",
+                color: "#1a1a1a",
+                letterSpacing: "0.5px",
               }}
             >
-              {data.name}
+              {data.name.toUpperCase()}
             </h1>
             <div
               style={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "space-between",
-                alignItems: "center",
-                fontSize: "1rem",
-                marginTop: "8px",
+                fontSize: "12pt",
+                color: "#333",
+                fontWeight: "400",
+                marginTop: "4px",
+                marginBottom: "5px",
               }}
             >
-              <div>{data.location}</div>
-              <div>{data.phone}</div>
-              <div>{data.mail}</div>
-              <div>LinkedIn: {data.linkedinLabel || data.linkedin}</div>
-              <div>GitHub: {data.github}</div>
+              {data.title}
+            </div>
+            <div
+              style={{
+                fontSize: "9.5pt",
+                color: "#555",
+              }}
+            >
+              {data.location} • {data.mail} • {data.phone} • LinkedIn:{" "}
+              {data.linkedin} • GitHub: {data.github}
             </div>
           </div>
           {/* Summary */}
-          <div style={{ marginBottom: "18px" }}>
+          <div style={{ marginBottom: "10px" }}>
             <div
-              style={{
-                fontSize: "1.1rem",
-                fontWeight: "bold",
-                color: "#2b4a6f",
-                marginBottom: "4px",
-                letterSpacing: "0.5px",
-              }}
+              style={{ fontSize: "9pt", color: "#333", textAlign: "justify" }}
             >
-              {lang === "fr" ? "Résumé" : "Summary"}
+              {data.summary}
             </div>
-            <div>{data.summary}</div>
           </div>
-          {/* Experience & Education */}
-          <div style={{ marginBottom: "18px" }}>
+
+          {/* Professional Experience */}
+          <div style={{ marginBottom: "10px" }}>
             <div
               style={{
-                fontSize: "1.1rem",
-                fontWeight: "bold",
-                color: "#2b4a6f",
-                marginBottom: "4px",
-                letterSpacing: "0.5px",
+                fontSize: "10.5pt",
+                fontWeight: "700",
+                color: "#1a1a1a",
+                marginBottom: "5px",
+                textTransform: "uppercase",
+                letterSpacing: "0.3px",
+                borderBottom: "1px solid #999",
+                paddingBottom: "1px",
               }}
             >
               {lang === "fr"
-                ? "Expérience & Formation"
-                : "Experience & Education"}
+                ? "Expérience Professionnelle"
+                : "Professional Experience"}
             </div>
-            <div
-              style={{ borderTop: "1.5px solid #b0b8c1", marginBottom: "10px" }}
-            ></div>
-            {data.experiences.map((exp: any, idx: number) => (
-              <div key={idx} style={{ marginBottom: "14px" }}>
-                <div
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "1.05rem",
-                    color: "#2b4a6f",
-                  }}
-                >
-                  {exp.company} — {exp.position}
+            {data.experiences
+              .filter((exp) => !exp.isFormation)
+              .map((exp, idx) => (
+                <div key={idx} style={{ marginBottom: "7px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "baseline",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontWeight: "600",
+                        fontSize: "10pt",
+                        color: "#1a1a1a",
+                      }}
+                    >
+                      {exp.position} • {exp.company} • {exp.location}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "9.5pt",
+                        color: "#666",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      {exp.duration}
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "9pt",
+                      color: "#333",
+                      marginBottom: "2px",
+                    }}
+                  >
+                    {exp.description}
+                  </div>
+                  {exp.bullets && exp.bullets.length > 0 && (
+                    <ul style={{ margin: "2px 0 0 18px", padding: 0 }}>
+                      {exp.bullets.map((bullet, bidx) => (
+                        <li
+                          key={bidx}
+                          style={{
+                            fontSize: "8.5pt",
+                            color: "#444",
+                            marginBottom: "0.5px",
+                            lineHeight: "1.3",
+                          }}
+                        >
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-                <div
-                  style={{
-                    fontStyle: "italic",
-                    fontSize: "0.97em",
-                    color: "#444",
-                    marginBottom: "2px",
-                  }}
-                >
-                  {exp.location} | {exp.duration}
-                </div>
-                <div>{exp.description}</div>
-                {exp.bullets && exp.bullets.length > 0 && (
-                  <ul style={{ margin: "0.25rem 0 0 1.2rem", padding: 0 }}>
-                    {exp.bullets.map((bullet: string, bidx: number) => (
-                      <li key={bidx} style={{ marginBottom: "2px" }}>
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
-          {/* Skills */}
-          <div style={{ marginBottom: "18px" }}>
+              ))}
+
+            {/* Education Section */}
             <div
               style={{
-                fontSize: "1.1rem",
-                fontWeight: "bold",
-                color: "#2b4a6f",
+                fontSize: "11pt",
+                fontWeight: "700",
+                color: "#1a1a1a",
+                marginBottom: "5px",
+                marginTop: "10px",
+                textTransform: "uppercase",
+                letterSpacing: "0.3px",
+                borderBottom: "1px solid #999",
+                paddingBottom: "1px",
+              }}
+            >
+              {lang === "fr" ? "Formation" : "Education"}
+            </div>
+            {data.experiences
+              .filter((exp) => exp.isFormation)
+              .map((exp, idx) => (
+                <div key={idx} style={{ marginBottom: "7px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "baseline",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontWeight: "600",
+                        fontSize: "10pt",
+                        color: "#1a1a1a",
+                      }}
+                    >
+                      {exp.position} • {exp.company}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "9.5pt",
+                        color: "#666",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      {exp.duration}
+                    </div>
+                  </div>
+                  <div style={{ fontSize: "9pt", color: "#333" }}>
+                    {exp.location} - {exp.description}
+                  </div>
+                  {exp.bullets && exp.bullets.length > 0 && (
+                    <ul style={{ margin: "2px 0 0 15px", padding: 0 }}>
+                      {exp.bullets.map((bullet, bidx) => (
+                        <li
+                          key={bidx}
+                          style={{
+                            fontSize: "8.5pt",
+                            color: "#444",
+                            lineHeight: "1.25",
+                          }}
+                        >
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+          </div>
+          {/* Skills & Hobbies */}
+          <div style={{ marginBottom: "12px" }}>
+            <div
+              style={{
+                fontSize: "10pt",
+                fontWeight: "700",
+                color: "#1a1a1a",
                 marginBottom: "4px",
-                letterSpacing: "0.5px",
+                marginTop: "10px",
+                textTransform: "uppercase",
+                letterSpacing: "0.3px",
+                borderBottom: "1px solid #999",
+                paddingBottom: "1px",
               }}
             >
               {lang === "fr" ? "Compétences" : "Skills"}
             </div>
-            <div style={{ marginBottom: "2px" }}>
-              <span style={{ fontWeight: "bold" }}>
-                {lang === "fr" ? "Code" : "Code"}:
+            <div style={{ marginBottom: "3px" }}>
+              <span
+                style={{ fontWeight: "600", fontSize: "9.5pt", color: "#333" }}
+              >
+                {lang === "fr" ? "Technologies:" : "Technologies:"}
               </span>{" "}
-              {data.skills.code.join(", ")}
+              <span style={{ fontSize: "9.5pt", color: "#555" }}>
+                {data.skills.code.join(", ")}
+              </span>
+            </div>
+            <div style={{ marginBottom: "3px" }}>
+              <span
+                style={{ fontWeight: "600", fontSize: "9.5pt", color: "#333" }}
+              >
+                {lang === "fr" ? "Outils:" : "Tools:"}
+              </span>{" "}
+              <span style={{ fontSize: "9.5pt", color: "#555" }}>
+                {data.skills.projet.join(", ")}
+              </span>
             </div>
             <div>
-              <span style={{ fontWeight: "bold" }}>
-                {lang === "fr" ? "Projet" : "Project"}:
+              <span
+                style={{ fontWeight: "600", fontSize: "9.5pt", color: "#333" }}
+              >
+                {lang === "fr" ? "Intérêts:" : "Interests:"}
               </span>{" "}
-              {data.skills.projet.join(", ")}
+              <span style={{ fontSize: "9.5pt", color: "#555" }}>
+                {data.hobbies.join(", ")}
+              </span>
             </div>
           </div>
           {/* Publications */}
           <div style={{ marginBottom: "0" }}>
             <div
               style={{
-                fontSize: "1.1rem",
-                fontWeight: "bold",
-                color: "#2b4a6f",
+                fontSize: "10pt",
+                fontWeight: "700",
+                color: "#1a1a1a",
                 marginBottom: "4px",
-                letterSpacing: "0.5px",
+                marginTop: "10px",
+                textTransform: "uppercase",
+                letterSpacing: "0.3px",
+                borderBottom: "1px solid #999",
+                paddingBottom: "1px",
               }}
             >
-              {lang === "fr" ? "Publications" : "Publications"}
+              Publications
             </div>
-            <div
-              style={{ borderTop: "1.5px solid #b0b8c1", marginBottom: "10px" }}
-            ></div>
-            <div style={{ marginBottom: "8px" }}>
-              <strong>2024 - GWFSS: Wheat Semantic Segmentation Dataset</strong>
-              <div>
-                Open-source dataset for semantic segmentation of wheat imagery.
+            {data.publications.map((pub, index) => (
+              <div
+                key={index}
+                style={{
+                  marginBottom:
+                    index === data.publications.length - 1 ? "0" : "5px",
+                }}
+              >
+                <div
+                  style={{
+                    fontWeight: "600",
+                    fontSize: "9.5pt",
+                    color: "#1a1a1a",
+                  }}
+                >
+                  {pub.title} ({pub.year})
+                </div>
+                <div style={{ fontSize: "9pt", color: "#555" }}>
+                  {pub.description}
+                </div>
+                <div
+                  style={{
+                    fontSize: "9.5pt",
+                    color: "#666",
+                    fontStyle: "italic",
+                  }}
+                >
+                  {pub.url}
+                </div>
               </div>
-              <div style={{ color: "#2b4a6f", fontSize: "0.97em" }}>
-                https://www.global-wheat.com/gwfss.html
-              </div>
-            </div>
-            <div>
-              <strong>
-                2024 - Predicting Sunflower Head Moisture Content Using
-                Self-Supervised Intermediate Representations
-              </strong>
-              <div>
-                Leveraging autoencoder-based intermediate features to estimate
-                moisture content in sunflower heads from image data.
-              </div>
-              <div style={{ color: "#2b4a6f", fontSize: "0.97em" }}>
-                https://helexproject.eu/fr/le-projet-helex/
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
