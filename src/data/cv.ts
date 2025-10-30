@@ -3,8 +3,9 @@ import yaml from "yaml";
 import cvRaw from "./cv.yaml?raw";
 
 export interface Skill {
-  code: string[];
-  projet: string[];
+  ml: string[];
+  llm: string[];
+  devops: string[];
 }
 
 export interface Experience {

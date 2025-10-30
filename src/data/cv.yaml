@@ -1,7 +1,7 @@
 fr:
   name: "Adam Serghini"
   title: "Ingénieur IA & Lead Développeur"
-  summary: "Ingénieur R&D spécialisé en Intelligence Artificielle avec plus de 4 années d'expérience en apprentissage profond, vision par ordinateur et management d'équipe. Expert en optimisation de pipelines ML temps réel et en refonte d'architectures logicielles. Passionné par l'innovation technologique et le leadership technique."
+  summary: "Ingénieur R&D spécialisé en Intelligence Artificielle avec plus de 4 années d'expérience en apprentissage profond, vision par ordinateur, orchestration LLM et management d'équipe. Expert en optimisation de pipelines ML temps réel et en refonte d'architectures logicielles. Passionné par l'innovation technologique et le leadership technique."
   mail: serghini.adam.84@gmail.com
   location: "84000 Avignon, France"
   github: Adam-Serghini
@@ -9,23 +9,28 @@ fr:
   linkedinLabel: /adam-serghini
   phone: +33.6.23.77.23.45
   skills:
-    code:
-      - Python
+    ml:
       - Pytorch
+      - Scikit-learn
+      - OpenCV
       - Roboflow
-      - Plotly
-      - Dash
       - Pandas
       - Numpy
-      - Docker
-      - OpenCV
-      - UV
+    llm:
+      - Claude
+      - Prompt Engineering
+      - Agent Orchestration
       - MCP
-    projet:
-      - Atlassian
+    devops:
+      - Python
+      - Docker
+      - UV
+      - Git
+      - CI/CD
       - Bitbucket
       - Jira
-      - Git
+      - Plotly
+      - Dash
   experiences:
     - company: "Hiphen"
       position: "Lead Ingénieur IA"
@@ -35,11 +40,10 @@ fr:
       isFormation: false
       description: "Responsable de la refonte complète du pipeline d'apprentissage profond de l'entreprise, de la définition des problématiques jusqu'au déploiement des modèles en production. Direction du développement de solutions d'IA performantes, adaptées aux contraintes réelles de précision, rapidité et robustesse."
       bullets:
-        - "Conception de pipelines complets de traitement : annotation, ré-annotation stratégique, suivi qualité, ré-entraînement et validation continue."
-        - "Conception et entraînement de modèles pour la classification, la segmentation sémantique et d'instance, la détection et l'extraction de caractéristiques."
+        - "Conception de pipelines ML de bout en bout : annotation, ré-annotation stratégique, suivi qualité, ré-entraînement et déploiement continu."
         - "Développement de modèles de détection, segmentation (sémantique & instance) et classification en temps réel avec une précision supérieure à 95%."
         - "Refonte du code de production via la création de packages réutilisables et mutualisation des modules d'apprentissage profond."
-        - "Choix d'architectures selon les contraintes projet (latence, performance, ressources) et évaluation continue sur des interfaces internes."
+        - "Développement de systèmes multi-agents et automatisation de workflows via orchestration LLM (Claude, MCP), réduisant de 30% le temps de développement et revue de code."
         - "Pilotage d'une équipe technique composée de développeurs et stagiaires : définition des bonnes pratiques, accompagnement technique et suivi de montée en compétences."
         - "Collaboration étroite avec les pôles R&D, Production et Marketing pour aligner les solutions IA aux besoins métiers."
     - company: "Hiphen"
@@ -81,48 +85,55 @@ fr:
       bullets:
         - "Mise en œuvre de modèles RNN, LSTM et Transformers pour des tâches de traitement du langage naturel (classification, génération, résumé de texte)."
   hobbies:
-    - Voyage & exploration
     - E-sport
-    - Musculation
-    - Cuisine
     - Volley-ball
+    - Cuisine
   publications:
+    - title: "geodes-sentinel2"
+      year: 2025
+      description: "Package Python open-source pour le téléchargement, prétraitement et traitement d'images satellites Sentinel-2. Permet aux chercheurs d'extraire des indices agricoles (NDVI, etc.) avec tests automatisés CI/CD. Disponible sur PyPI et GitHub."
+      url: "https://github.com/Adam-Serghini/geodes-sentinel2"
     - title: "GWFSS: Wheat Semantic Segmentation Dataset"
       year: 2024
       description: "Dataset open-source pour la segmentation sémantique d'images de blé."
       url: "https://www.global-wheat.com/gwfss.html"
-    - title: "Prédiction de la teneur en humidité des têtes de tournesol par représentations intermédiaires auto-supervisées"
-      year: 2024
-      description: "Exploitation de caractéristiques intermédiaires basées sur des auto-encodeurs pour estimer la teneur en humidité des têtes de tournesol à partir de données d'images."
-      url: "https://helexproject.eu/fr/le-projet-helex/"
+    # - title: "Prédiction de l'humidité des tournesols par auto-encodeurs"
+    #   year: 2024
+    #   description: "Prédiction de l'humidité des tournesols par auto-encodeurs pour l'agriculture de précision."
+    #   url: "https://helexproject.eu/fr/le-projet-helex/"
 
 en:
   name: "Adam Serghini"
   title: "AI Engineer & Lead Developer"
-  summary: "R&D Engineer specialized in Artificial Intelligence with over 4 years of experience in deep learning, computer vision, and team management. Expert in real-time ML pipeline optimization and software architecture redesign. Passionate about technological innovation and technical leadership."
+  summary: "R&D Engineer specialized in Artificial Intelligence with over 4 years of experience in deep learning, computer vision, LLM orchestration, and team management. Expert in real-time ML pipeline optimization and software architecture redesign. Passionate about technological innovation and technical leadership."
   mail: serghini.adam.84@gmail.com
   location: "84000 Avignon, France"
   github: Adam-Serghini
   phone: +33.6.23.77.23.45
   linkedin: adam-serghini
   skills:
-    code:
-      - Python
+    ml:
       - Pytorch
+      - Scikit-learn
+      - OpenCV
       - Roboflow
-      - Plotly
-      - Dash
       - Pandas
       - Numpy
-      - Docker
-      - OpenCV
-      - UV
+    llm:
+      - Claude
+      - Prompt Engineering
+      - Agent Orchestration
       - MCP
-    projet:
-      - Atlassian
+    devops:
+      - Python
+      - Docker
+      - UV
+      - Git
+      - CI/CD
       - Bitbucket
       - Jira
-      - Git
+      - Plotly
+      - Dash
 
   experiences:
     - company: "Hiphen"
@@ -133,11 +144,10 @@ en:
       isFormation: false
       description: "Responsible for the complete overhaul of the company's deep learning pipeline, from problem definition to model deployment in production. Leading the development of high-performance AI solutions adapted to real-world constraints of accuracy, speed, and robustness."
       bullets:
-        - "Design of complete processing pipelines: annotation, strategic re-annotation, quality monitoring, retraining, and continuous validation."
-        - "Design and training of models for classification, semantic and instance segmentation, detection, and feature extraction."
+        - "Design of end-to-end ML pipelines: annotation, strategic re-annotation, quality monitoring, retraining, and continuous deployment."
         - "Development of real-time detection, segmentation (semantic & instance), and classification models with over 95% accuracy."
         - "Production code refactoring through creation of reusable packages and consolidation of deep learning modules."
-        - "Architecture selection based on project constraints (latency, performance, resources) and continuous evaluation on internal interfaces."
+        - "Development of multi-agent systems and workflow automation via LLM orchestration (Claude, MCP), reducing development and code review time by 30%."
         - "Leading a technical team of developers and interns: definition of best practices, technical guidance, and skill development support."
         - "Close collaboration with R&D, Production, and Marketing teams to align AI solutions with business needs."
     - company: "Hiphen"
@@ -179,17 +189,19 @@ en:
       bullets:
         - "Implementation of RNN, LSTM, and Transformer models for natural language processing tasks (classification, generation, text summarization)."
   hobbies:
-    - Travel & exploration
     - E-sports
-    - Weight training
-    - Cooking
     - Volleyball
+    - Cooking
   publications:
+    - title: "geodes-sentinel2"
+      year: 2025
+      description: "Open-source Python package for downloading, preprocessing, and processing Sentinel-2 satellite imagery. Enables researchers to extract agricultural indices (NDVI, etc.) with automated CI/CD testing. Available on PyPI and GitHub."
+      url: "https://github.com/Adam-Serghini/geodes-sentinel2"
     - title: "GWFSS: Wheat Semantic Segmentation Dataset"
       year: 2024
       description: "Open-source dataset for semantic segmentation of wheat imagery."
       url: "https://www.global-wheat.com/gwfss.html"
-    - title: "Predicting Sunflower Head Moisture Content Using Self-Supervised Intermediate Representations"
+    - title: "Sunflower Moisture Prediction Using Autoencoders"
       year: 2024
-      description: "Leveraging autoencoder-based intermediate features to estimate moisture content in sunflower heads from image data."
+      description: "Sunflower moisture prediction using autoencoders for precision agriculture."
       url: "https://helexproject.eu/fr/le-projet-helex/"

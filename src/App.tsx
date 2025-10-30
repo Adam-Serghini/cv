@@ -16,10 +16,11 @@ import {
   BookOpen,
   ExternalLink,
 } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "./components/ui/button";
 import { Badge } from "./components/ui/badge";
 import { ExperienceCard } from "./components/custom/experience";
+import { SkillBadge } from "./components/custom/skill-badge";
 import { cvData } from "./data/cv";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "./components/mode-toggle";
@@ -34,56 +35,6 @@ const useLanguage = () => {
   const isFrench = lang === "fr";
 
   return { lang, setLang, toggleLanguage, isFrench };
-};
-
-// Component for skill badge with icon
-const SkillBadge = ({ skill }: { skill: string }) => {
-  const [iconSrc, setIconSrc] = useState<string | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [hasError, setHasError] = useState(false);
-
-  // Build CDN and local URLs
-  const cdnUrl = `https://cdn.simpleicons.org/${skill
-    .toLowerCase()
-    .replace(/\s+/g, "")}`;
-  const localUrl = `${import.meta.env.BASE_URL}icon/${skill.replace(
-    /\s+/g,
-    ""
-  )}.png`;
-
-  // On mount, try CDN first
-  useState(() => {
-    setIconSrc(cdnUrl);
-  });
-
-  const handleLoad = () => setIsLoaded(true);
-  const handleError = () => {
-    if (iconSrc === cdnUrl) {
-      // Try local fallback
-      setIconSrc(localUrl);
-      setIsLoaded(false);
-    } else {
-      setHasError(true);
-    }
-  };
-
-  return (
-    <Badge variant="secondary" className="text-xs">
-      {!hasError && iconSrc && (
-        <img
-          width="14px"
-          src={iconSrc}
-          className={`inline-block mr-1 transition-opacity duration-200 ${
-            isLoaded ? "opacity-100" : "opacity-0"
-          }`}
-          alt={skill}
-          onLoad={handleLoad}
-          onError={handleError}
-        />
-      )}
-      {skill}
-    </Badge>
-  );
 };
 
 function App() {
@@ -170,20 +121,36 @@ function App() {
           {/* Skills */}
           <Card className="p-4 rounded-xl border gap-3">
             <Badge variant="secondary" className="text-xs font-semibold">
-              Skills | Code
+              {lang === "fr"
+                ? "Compétences | ML & Vision"
+                : "Skills | ML & Vision"}
             </Badge>
             <div className="flex flex-row flex-wrap items-start content-start gap-1.5">
-              {data.skills.code.map((skill, index) => (
+              {data.skills.ml.map((skill, index) => (
                 <SkillBadge key={index} skill={skill} />
               ))}
             </div>
           </Card>
           <Card className="p-4 rounded-xl border gap-3">
             <Badge variant="secondary" className="text-xs font-semibold">
-              Skills | Project
+              {lang === "fr"
+                ? "Compétences | LLM & Agents"
+                : "Skills | LLM & Agents"}
             </Badge>
             <div className="flex flex-row flex-wrap items-start content-start gap-1.5">
-              {data.skills.projet.map((skill, index) => (
+              {data.skills.llm.map((skill, index) => (
+                <SkillBadge key={index} skill={skill} />
+              ))}
+            </div>
+          </Card>
+          <Card className="p-4 rounded-xl border gap-3">
+            <Badge variant="secondary" className="text-xs font-semibold">
+              {lang === "fr"
+                ? "Compétences | Développement & Outils"
+                : "Skills | Development & Tools"}
+            </Badge>
+            <div className="flex flex-row flex-wrap items-start content-start gap-1.5">
+              {data.skills.devops.map((skill, index) => (
                 <SkillBadge key={index} skill={skill} />
               ))}
             </div>
@@ -460,14 +427,8 @@ function App() {
               .filter((exp) => !exp.isFormation)
               .map((exp, idx) => (
                 <div key={idx} style={{ marginBottom: "7px" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "baseline",
-                    }}
-                  >
-                    <div
+                  <div style={{ marginBottom: "2px" }}>
+                    <span
                       style={{
                         fontWeight: "600",
                         fontSize: "10pt",
@@ -475,16 +436,17 @@ function App() {
                       }}
                     >
                       {exp.position} • {exp.company} • {exp.location}
-                    </div>
-                    <div
+                    </span>
+                    <span
                       style={{
                         fontSize: "9.5pt",
                         color: "#666",
                         fontStyle: "italic",
+                        marginLeft: "10px",
                       }}
                     >
                       {exp.duration}
-                    </div>
+                    </span>
                   </div>
                   <div
                     style={{
@@ -535,14 +497,8 @@ function App() {
               .filter((exp) => exp.isFormation)
               .map((exp, idx) => (
                 <div key={idx} style={{ marginBottom: "7px" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "baseline",
-                    }}
-                  >
-                    <div
+                  <div style={{ marginBottom: "2px" }}>
+                    <span
                       style={{
                         fontWeight: "600",
                         fontSize: "10pt",
@@ -550,16 +506,17 @@ function App() {
                       }}
                     >
                       {exp.position} • {exp.company}
-                    </div>
-                    <div
+                    </span>
+                    <span
                       style={{
                         fontSize: "9.5pt",
                         color: "#666",
                         fontStyle: "italic",
+                        marginLeft: "10px",
                       }}
                     >
                       {exp.duration}
-                    </div>
+                    </span>
                   </div>
                   <div style={{ fontSize: "9pt", color: "#333" }}>
                     {exp.location} - {exp.description}
@@ -604,20 +561,32 @@ function App() {
               <span
                 style={{ fontWeight: "600", fontSize: "9.5pt", color: "#333" }}
               >
-                {lang === "fr" ? "Technologies:" : "Technologies:"}
+                {lang === "fr" ? "ML & Vision:" : "ML & Vision:"}
               </span>{" "}
               <span style={{ fontSize: "9.5pt", color: "#555" }}>
-                {data.skills.code.join(", ")}
+                {data.skills.ml.join(" • ")}
               </span>
             </div>
             <div style={{ marginBottom: "3px" }}>
               <span
                 style={{ fontWeight: "600", fontSize: "9.5pt", color: "#333" }}
               >
-                {lang === "fr" ? "Outils:" : "Tools:"}
+                {lang === "fr" ? "LLM & Agents:" : "LLM & Agents:"}
               </span>{" "}
               <span style={{ fontSize: "9.5pt", color: "#555" }}>
-                {data.skills.projet.join(", ")}
+                {data.skills.llm.join(" • ")}
+              </span>
+            </div>
+            <div style={{ marginBottom: "3px" }}>
+              <span
+                style={{ fontWeight: "600", fontSize: "9.5pt", color: "#333" }}
+              >
+                {lang === "fr"
+                  ? "Développement & Outils:"
+                  : "Development & Tools:"}
+              </span>{" "}
+              <span style={{ fontSize: "9.5pt", color: "#555" }}>
+                {data.skills.devops.join(" • ")}
               </span>
             </div>
             <div>
