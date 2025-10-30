@@ -16,7 +16,7 @@ import {
   BookOpen,
   ExternalLink,
 } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Button } from "./components/ui/button";
 import { Badge } from "./components/ui/badge";
 import { ExperienceCard } from "./components/custom/experience";
